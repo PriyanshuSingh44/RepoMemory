@@ -1,0 +1,92 @@
+[
+  {
+    "id": "task_01",
+    "category": "code_location",
+    "question": "Where is Python AST chunking implemented and how does it extract functions and classes?",
+    "ground_truth_file": "indexer.py",
+    "ground_truth_symbol": "chunk_python_ast",
+    "keywords": ["chunk_python_ast", "ast.parse", "FunctionDef", "ClassDef"],
+    "difficulty": "easy"
+  },
+  {
+    "id": "task_02",
+    "category": "code_location",
+    "question": "Which function handles line-window chunking with overlap for non-Python or fallback files?",
+    "ground_truth_file": "indexer.py",
+    "ground_truth_symbol": "chunk_by_line_window",
+    "keywords": ["chunk_by_line_window", "window_size", "overlap"],
+    "difficulty": "easy"
+  },
+  {
+    "id": "task_03",
+    "category": "code_location",
+    "question": "How are binary files detected before attempting to parse them as text?",
+    "ground_truth_file": "indexer.py",
+    "ground_truth_symbol": "is_binary_file",
+    "keywords": ["is_binary_file", "null", "\\x00"],
+    "difficulty": "easy"
+  },
+  {
+    "id": "task_04",
+    "category": "architecture",
+    "question": "How does incremental re-indexing track file changes between runs without re-embedding everything?",
+    "ground_truth_file": "indexer.py",
+    "ground_truth_symbol": "repomemory_manifest.json",
+    "keywords": ["manifest", "sha256", "compute_sha256", "new_file_hashes"],
+    "difficulty": "medium"
+  },
+  {
+    "id": "task_05",
+    "category": "tools",
+    "question": "What parameters does the search_code tool accept and what metadata does it return?",
+    "ground_truth_file": "tools.py",
+    "ground_truth_symbol": "search_code",
+    "keywords": ["query", "k", "file_path", "start_line", "end_line"],
+    "difficulty": "easy"
+  },
+  {
+    "id": "task_06",
+    "category": "tools",
+    "question": "Where is the save_note function implemented and what file does it write persistent notes to?",
+    "ground_truth_file": "tools.py",
+    "ground_truth_symbol": "save_note",
+    "keywords": ["save_note", "DECISIONS.md", "team_knowledge"],
+    "difficulty": "medium"
+  },
+  {
+    "id": "task_07",
+    "category": "decision_recall",
+    "question": "Why did we choose all-MiniLM-L6-v2 as the default local embedding model?",
+    "ground_truth_file": "DECISIONS.md",
+    "ground_truth_symbol": "Embedding Model Selection",
+    "keywords": ["MiniLM", "fast", "local", "lightweight", "embedding"],
+    "difficulty": "medium"
+  },
+  {
+    "id": "task_08",
+    "category": "decision_recall",
+    "question": "Why did we choose ChromaDB over a raw SQLite or JSON vector implementation?",
+    "ground_truth_file": "DECISIONS.md",
+    "ground_truth_symbol": "Vector Store Selection",
+    "keywords": ["Chroma", "cosine", "persistent", "HNSW", "local"],
+    "difficulty": "medium"
+  },
+  {
+    "id": "task_09",
+    "category": "code_location",
+    "question": "Which Chroma collections are initialized in RepoIndexer and what distance metric do they use?",
+    "ground_truth_file": "indexer.py",
+    "ground_truth_symbol": "_init_models",
+    "keywords": ["repo_code", "team_knowledge", "cosine", "hnsw:space"],
+    "difficulty": "medium"
+  },
+  {
+    "id": "task_10",
+    "category": "agent",
+    "question": "How does CodingAgent estimate tokens for context comparison?",
+    "ground_truth_file": "agent.py",
+    "ground_truth_symbol": "estimate_tokens",
+    "keywords": ["estimate_tokens", "chars", "characters"],
+    "difficulty": "easy"
+  }
+]

@@ -1,0 +1,11 @@
+task_id,category,difficulty,question,memory_prompt_tokens,memory_total_tokens,memory_latency_s,memory_correct,baseline_prompt_tokens,baseline_total_tokens,baseline_latency_s,baseline_correct,token_savings_pct
+task_01,code_location,easy,Where is Python AST chunking implemented and how does it extract functions and classes?,1731,2511,8.4,True,20226,20436,0.001,True,91.44
+task_02,code_location,easy,Which function handles line-window chunking with overlap for non-Python or fallback files?,1693,2192,0.034,True,20227,20490,0.002,False,91.63
+task_03,code_location,easy,How are binary files detected before attempting to parse them as text?,1215,1534,0.08,True,20222,20446,0.004,True,93.99
+task_04,architecture,medium,How does incremental re-indexing track file changes between runs without re-embedding everything?,4762,6625,0.038,False,20229,20440,0.002,False,76.46
+task_05,tools,easy,What parameters does the search_code tool accept and what metadata does it return?,1319,1660,0.027,True,20225,20481,0.002,True,93.48
+task_06,tools,medium,Where is the save_note function implemented and what file does it write persistent notes to?,938,1134,0.025,True,20228,20445,0.002,True,95.36
+task_07,decision_recall,medium,Why did we choose all-MiniLM-L6-v2 as the default local embedding model?,10667,14104,0.027,True,20222,20401,0.003,True,47.25
+task_08,decision_recall,medium,Why did we choose ChromaDB over a raw SQLite or JSON vector implementation?,4161,4492,0.024,True,20223,20401,0.003,True,79.42
+task_09,code_location,medium,Which Chroma collections are initialized in RepoIndexer and what distance metric do they use?,3242,5755,0.025,True,20228,20389,0.003,False,83.97
+task_10,agent,easy,How does CodingAgent estimate tokens for context comparison?,1019,1366,0.026,True,20219,20472,0.004,True,94.96
