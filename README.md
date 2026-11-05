@@ -75,10 +75,10 @@ repomemory/
 ├── indexer.py          # AST chunker, commit/notes harvester, ChromaDB indexer
 ├── tools.py            # Retrieval tools (search_code, recall_decisions, save_note) + Ollama schemas
 ├── agent.py            # Agent runner supporting tool mode and baseline comparison
+├── mcp_server.py       # MCP server exposing RepoMemory tools to external agents
 ├── benchmark.py        # Benchmark suite evaluating token usage, latency, and accuracy
 ├── tasks.json          # 10 benchmark tasks (code navigation, architectural decisions)
 ├── DECISIONS.md        # Architectural decision records indexed into team memory
-├── DOCUMENTATION.md    # Full comprehensive technical explanation & architectural decisions
 ├── requirements.txt    # Minimal dependencies (chromadb, sentence-transformers, requests)
 ├── results.csv         # Measured benchmark output from actual run
 └── README.md           # Documentation and architecture guide
@@ -147,17 +147,37 @@ print(tools.format_tool_result("recall_decisions", decisions))
 tools.save_note("Switched default chunk size from 100 to 50 for higher precision.")
 ```
 
-### 4. Run the Token-Savings Benchmark
+### 4. Connect an MCP-Compatible Coding Agent
+RepoMemory can expose indexing, semantic code search, decision recall, and
+decision-note writing as tools over the Model Context Protocol (MCP). Add a
+server entry to your agent's MCP configuration, using absolute paths:
+
+```json
+{
+  "mcpServers": {
+    "repomemory": {
+      "command": "python",
+      "args": [
+        "C:\\path\\to\\repomemory\\mcp_server.py",
+        "--repo",
+        "C:\\path\\to\\your-project"
+      ]
+    }
+  }
+}
+```
+
+Install dependencies with `pip install -r requirements.txt` in the Python
+environment used by the MCP server. The agent can call `index_repository`
+before searching and after changes, `search_code` for implementation details,
+`recall_decisions` for project history, and `save_note` to append durable
+rationale to the target project's `DECISIONS.md`. The MCP server is scoped to
+the repository passed with `--repo`; use `--db` in both the indexer and server
+configuration if the database is stored elsewhere. The exact configuration
+file location depends on the coding agent.
+
+### 5. Run the Token-Savings Benchmark
 Run the automated benchmark across all tasks in `tasks.json`:
 ```bash
 python benchmark.py --repo . --tasks tasks.json --output results.csv
 ```
-
----
-
-## Honest Limitations
-
-1. **Embedding Context Window**: `all-MiniLM-L6-v2` has an input limit of 256 tokens. While AST chunking breaks functions into manageable blocks, very long functions (100+ lines) may get truncated during embedding.
-2. **Cold Start Latency**: The first retrieval query incurs a small model loading delay (~1.5s–2s) before SentenceTransformer weights are cached in memory. Subsequent queries execute in under 35ms.
-3. **AST Language Support**: Syntax-aware structural chunking currently parses Python (`ast`). Other languages (JS, TS, Go, Rust) use line windowing with overlap; tree-sitter bindings could be added for multi-language AST chunking in a future release.
-4. **Git Log Depth**: Git history indexing inspects the last 100 commits to keep indexing fast; very old historical rationales require explicit documentation in `DECISIONS.md`.

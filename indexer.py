@@ -4,6 +4,7 @@ import json
 import hashlib
 import argparse
 import subprocess
+import sys
 from typing import List, Dict, Any, Optional
 
 try:
@@ -208,7 +209,7 @@ class RepoIndexer:
         if self.embedder is None:
             if SentenceTransformer is None:
                 raise ImportError("sentence-transformers is not installed.")
-            print(f"Loading embedding model: {self.model_name}...")
+            print(f"Loading embedding model: {self.model_name}...", file=sys.stderr)
             self.embedder = SentenceTransformer(self.model_name)
 
         if self.chroma_client is None:
